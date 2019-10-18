@@ -1,6 +1,13 @@
 import React from 'react';
 
-const MousePointer = ({ xPos, yPos }) => {
+const MousePointer = ({ xPos, yPos, colour, size }) => {
+  console.log('size in mouse pointer', size);
+  const backgroundGradient =
+  `radial-gradient(
+    hsla(${colour}, 100%, 50%, 80%),
+    hsla(${colour}, 100%, 50%, 0),
+    hsla(${colour}, 100%, 50%, 0))`;
+
   return (
     <div>
       <style jsx>{`
@@ -9,10 +16,10 @@ const MousePointer = ({ xPos, yPos }) => {
           display: block;
           top: ${yPos}px;
           left: ${xPos}px;
-          width: 20px;
-          height: 20px;
+          width: ${size}px;
+          height: ${size}px;
           border-radius: 50%;
-          background-image: radial-gradient(rgba(255, 125, 0, 0.8), rgba(255, 125, 0, 0), rgba(255, 125, 0, 0));
+          background-image: ${backgroundGradient};
         }
       `}</style>
     </div>

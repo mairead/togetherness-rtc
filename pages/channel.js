@@ -4,7 +4,7 @@ import Immutable from 'immutable';
 
 import styled from "styled-components";
 
-import { isClient, seedGen } from "../libs/utils";
+import { isClient, seedGen, getRandomisedNumber } from "../libs/utils";
 
 import Header from "../components/channel/Header";
 import Board from '../components/Board';
@@ -35,25 +35,53 @@ export default class extends React.Component {
       this.setState({ visible: 1 });
     }, 300);
     this.initChannel();
+    this.setState({ usersList: Immutable.Map() });
   }
 
   _onMouseMove(e) {
+    const { userID } = this.state;
+    let { usersList } = this.state;
+    RTC.broadcastMessage({ cmd: "message", x: e.screenX, y: e.screenY, userID  });
+
+    usersList = usersList
+      .setIn([userID, 'x'], e.screenX)
+      .setIn([userID, 'y'], e.screenY);
+
+    this.setState({ usersList });
+  }
+
+  _onTouchMove(e) {
     const { userID } = this.state;
     // console.log('is this triggered?', userID); // this is setting channel id instead of unique person
     RTC.broadcastMessage({ cmd: "message", x: e.screenX, y: e.screenY, userID  });
     // this.setState({ x: e.screenX, y: e.screenY });
   }
 
+  fixTouchMove(e) {
+    e.preventDefault;
+    return;
+  }
+
   initChannel = async () => {
+    const { usersList } = this.state;
     console.log("Init channel ID", this.props.id);
     var started = false;
     var peer = await RTC.initChannel(this.props.id);
+    const peerId = peer.id;
+
     this.setState({
-      userID: peer.id
+      userID: peerId,
+      usersList: usersList.set(peerId, Immutable.fromJS({
+        x: 0,
+        y: 0,
+        mousePointerColour: getRandomisedNumber(0, 360),
+        size: getRandomisedNumber(50, 150),
+      })),
     });
 
     console.log('props', this.props.id);
     console.log('peer', peer.id);
+    console.log('after init', usersList.toJS());
     var Events = RTC.getEvents();
 
     RTC.connectToPeers(this.props.id);
@@ -62,7 +90,7 @@ export default class extends React.Component {
       let { usersList } = this.state;
       console.log(`Message: ${message.connection.peer}:`, message.data);
       const userID = message.data.userID;
-
+      console.log('message', usersList.toJS());
       if (message.data.cmd === "message") {
         // TODO update UsersList props
         usersList = usersList
@@ -91,13 +119,17 @@ export default class extends React.Component {
       }
     });
     Events.on("peerJoined", async message => {
-      const { usersList } = this.state;
+      let { usersList } = this.state;
       console.log(`Peer Joined:`, message.connection.peer);
       // Need to add new key value pair to object
 
       // TODO here can I randomly generate a colour and pass in as prop to userList
       // OR I could use the number to pick a colour in the HSLA spectrum
-      usersList.set(message.connection.peer.id, {});
+      const mousePointerColour = getRandomisedNumber(0, 360);
+
+      usersList = usersList
+        .setIn([message.connection.peer, 'mousePointerColour'], mousePointerColour)
+        .setIn([message.connection.peer, 'size'], getRandomisedNumber(50, 150));
       // TODO Add userId to usersList component
       this.setState({ usersList });
       // this.updateHistory({
@@ -156,9 +188,15 @@ export default class extends React.Component {
   //   this.setState({ message: "" });
   // };
 
+  // TODO board isn't really responsive so mobile doesn't work well
+
   render() {
     return (
-      <div onMouseMove={this._onMouseMove.bind(this)}>
+      <div
+        onMouseMove={this._onMouseMove.bind(this)}
+        onTouchMove={this._onTouchMove.bind(this)}
+        onTouchStart={this.fixTouchMove.bind(this)}
+      >
         <Head>
           <title>Togetherness</title>
           <link href="//db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular" rel="stylesheet" type="text/css"/>
@@ -174,7 +212,6 @@ export default class extends React.Component {
           p {
             font-family: arial;
             font-weight: bold;
-            text-transform: uppercase;
             text-align: center;
           }
           .credits {

@@ -35,11 +35,11 @@ class Board extends Component {
 
   updateWindowDimensions() {
     const boardOffset = (window.innerWidth - 800) / 2;
-    console.log('boardOffset', boardOffset);
+    // console.log('boardOffset', boardOffset);
     this.setState({
       width: window.innerWidth,
       height: window.innerHeight,
-      boardOffset,
+      // boardOffset,
     });
   }
 
@@ -55,9 +55,13 @@ class Board extends Component {
     const letterArray = ['t', 'o', 'g', 'e', 't', 'h', 'e', 'r'];
     const { x, y } = this.state;
 
-    console.log('list', usersList.toJS());
+    // TODO Doesn't currently include
+    console.log('list in board component', usersList.toJS());
     // TODO UsersList is an object literal, maybe I need an Immutable Map and keys?
     const userIds = Object.keys(usersList.toJS());
+    console.log('whats userIds?', userIds);
+
+    console.log(usersList.get(['OUC5b33jvN-1', 'size']));
     return (
       <div className="board">
         <p><span className="left">{userId}</span><span>{x},{y}</span><span className="right">Users:{usersTotal}</span></p>
@@ -76,8 +80,10 @@ class Board extends Component {
         {userIds.map((userId) => (
           <MousePointer
             key={userId}
+            colour={usersList.getIn([userId, 'mousePointerColour'])}
             xPos={usersList.getIn([userId, 'x'])}
             yPos={usersList.getIn([userId, 'y'])}
+            size={usersList.getIn([userId, 'size'])}
           />
         ))}
         <style jsx>{`
