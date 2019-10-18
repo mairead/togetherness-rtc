@@ -199,7 +199,7 @@ export default class extends React.Component {
       >
         <Head>
           <title>Togetherness</title>
-          <link href="https://db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular" rel="stylesheet" type="text/css"/>
+          <link href="http://db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular" rel="stylesheet" type="text/css"/>
         </Head>
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
         <Board
