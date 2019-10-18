@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import Immutable from 'immutable';
 import Circle from '../components/Circle';
+import { getRandomisedNumber } from "../libs/utils";
 
 class Background extends Component {
   constructor(props) {
@@ -17,13 +18,13 @@ class Background extends Component {
     let circles =  Immutable.Map();
 
     circleIds.map((id) => {
-      const circleSize = this.getRandomisedNumber(150, 450);
+      const circleSize = getRandomisedNumber(150, 450);
       circles = circles
         .setIn([id, 'width'], `${circleSize}px`)
         .setIn([id, 'height'], `${circleSize}px`)
-        .setIn([id, 'top'], `${this.getRandomisedNumber(-50, 200)}px`)
-        .setIn([id, 'left'], `${this.getRandomisedNumber(150, 450)}px`)
-        .setIn([id, 'colour'], this.getRandomisedNumber(0, 360));
+        .setIn([id, 'top'], `${getRandomisedNumber(-50, 200)}px`)
+        .setIn([id, 'left'], `${getRandomisedNumber(150, 450)}px`)
+        .setIn([id, 'colour'], getRandomisedNumber(0, 360));
     });
 
     this.state = {
@@ -36,12 +37,6 @@ class Background extends Component {
     let { circles, circleIds } = this.state;
 
     this.setState({ circles, circleIds });
-  }
-
-  getRandomisedNumber(min, max) {
-    let randomNumber = 0;
-    return Math.floor(Math.random() * (max - min + 1) + min);
-    return randomNumber;
   }
 
   render() {

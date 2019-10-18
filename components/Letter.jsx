@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import MousePointer from '../components/MousePointer';
 
 class Letter extends Component {
@@ -9,26 +10,31 @@ class Letter extends Component {
     yPos: PropTypes.number.isRequired,
     mouseXPos: PropTypes.number.isRequired,
     mouseYPos: PropTypes.number.isRequired,
+    usersList: ImmutablePropTypes.map,
   }
 
   getFontColour = (boardXPos) => {
-    const { mouseXPos } = this.props;
+    const { usersList } = this.props;
 
     let fontColour = 'black';
-    const distanceFromCenter = this.getDistanceFromCenter(boardXPos);
 
-    const hue = (360 / 50) * distanceFromCenter;
-
-    if (mouseXPos >= (boardXPos) && mouseXPos <= (boardXPos+100)) {
-    // if (mouseXPosAdjusted >= (boardXPos+100) && mouseXPosAdjusted <= (boardXPos+200)) {
-      fontColour = `hsl(${hue}, 100%, 50%)`;
-    }
+    // TODO Need to build in yPos detection also
+    const userIds = Object.keys(usersList.toJS());
+    userIds.forEach((userId) => {
+      const mouseXPos = usersList.getIn([userId, 'x']);
+      const distanceFromCenter = this.getDistanceFromCenter(mouseXPos, boardXPos);
+      const hue = (360 / 50) * distanceFromCenter;
+      // Letters only turning red on off and not cycling colours?
+      if (mouseXPos >= (boardXPos) && mouseXPos <= (boardXPos+100)) {
+        // if (mouseXPosAdjusted >= (boardXPos+100) && mouseXPosAdjusted <= (boardXPos+200)) {
+        fontColour = `hsl(${hue}, 100%, 50%)`;
+      }
+    });
 
     return fontColour;
   }
 
-  getDistanceFromCenter = (boardXPos) => {
-    const { mouseXPos } = this.props;
+  getDistanceFromCenter = (mouseXPos, boardXPos) => {
     const centerOfLetter = boardXPos + 50;
     let distanceFromCenter = 0;
 

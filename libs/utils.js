@@ -20,3 +20,10 @@ export const seedGen = length => {
       "Your browser is outdated and can't generate secure random numbers"
     );
 };
+
+export const getRandomisedNumber = (min, max) => {
+  let randomNumber = 0;
+  randomNumber = Math.floor(Math.random() * (max - min + 1) + min);
+
+  return randomNumber;
+}

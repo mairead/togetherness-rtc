@@ -6,7 +6,7 @@ import MousePointer from '../components/MousePointer';
 
 class Board extends Component {
   static propTypes = {
-    userId: PropTypes.string.isRequired,
+    userId: PropTypes.string,
     usersTotal: PropTypes.number.isRequired,
   }
 
@@ -43,19 +43,23 @@ class Board extends Component {
     });
   }
 
-  _onMouseMove(e) {
-    const { boardOffset } = this.state;
-    const boardMousePosX = e.screenX - boardOffset;
-    console.log(boardOffset, boardMousePosX);
-    this.setState({ x: boardMousePosX, y: e.screenY });
-  }
+  // _onMouseMove(e) {
+  //   const { boardOffset } = this.state;
+  //   const boardMousePosX = e.screenX - boardOffset;
+  //   console.log(boardOffset, boardMousePosX);
+  //   this.setState({ x: boardMousePosX, y: e.screenY });
+  // }
 
   render() {
-    const { userId, usersTotal } = this.props;
+    const { userId, usersTotal, usersList } = this.props;
     const letterArray = ['t', 'o', 'g', 'e', 't', 'h', 'e', 'r'];
     const { x, y } = this.state;
+
+    console.log('list', usersList.toJS());
+    // TODO UsersList is an object literal, maybe I need an Immutable Map and keys?
+    const userIds = Object.keys(usersList.toJS());
     return (
-      <div className="board" onMouseMove={this._onMouseMove.bind(this)}>
+      <div className="board">
         <p><span className="left">{userId}</span><span>{x},{y}</span><span className="right">Users:{usersTotal}</span></p>
         <Background />
         {letterArray.map((char, index) => (
@@ -64,14 +68,18 @@ class Board extends Component {
             char={char}
             xPos={index}
             yPos={200}
+            usersList={usersList}
             mouseXPos={x}
             mouseYPos={y}
           />
         ))}
-        <MousePointer
-          xPos={x}
-          yPos={y}
-        />
+        {userIds.map((userId) => (
+          <MousePointer
+            key={userId}
+            xPos={usersList.getIn([userId, 'x'])}
+            yPos={usersList.getIn([userId, 'y'])}
+          />
+        ))}
         <style jsx>{`
           .board {
             margin: 0 auto;

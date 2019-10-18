@@ -1,5 +1,6 @@
 import { Link, Router } from "../routes";
 import Head from 'next/head';
+import Immutable from 'immutable';
 
 import styled from "styled-components";
 
@@ -21,7 +22,8 @@ export default class extends React.Component {
     channel: "share",
     userID: undefined,
     peers: [],
-    message: ""
+    message: "",
+    usersList: Immutable.Map(),
   };
 
   componentDidMount() {
@@ -35,6 +37,13 @@ export default class extends React.Component {
     this.initChannel();
   }
 
+  _onMouseMove(e) {
+    const { userID } = this.state;
+    // console.log('is this triggered?', userID); // this is setting channel id instead of unique person
+    RTC.broadcastMessage({ cmd: "message", x: e.screenX, y: e.screenY, userID  });
+    // this.setState({ x: e.screenX, y: e.screenY });
+  }
+
   initChannel = async () => {
     console.log("Init channel ID", this.props.id);
     var started = false;
@@ -42,94 +51,124 @@ export default class extends React.Component {
     this.setState({
       userID: peer.id
     });
+
+    console.log('props', this.props.id);
+    console.log('peer', peer.id);
     var Events = RTC.getEvents();
 
     RTC.connectToPeers(this.props.id);
 
     Events.on("message", async message => {
+      let { usersList } = this.state;
       console.log(`Message: ${message.connection.peer}:`, message.data);
+      const userID = message.data.userID;
 
       if (message.data.cmd === "message") {
-        this.updateHistory({
-          msg: message.data.msg,
-          type: "partner",
-          sender: message.connection.peer,
-          time: Date.now()
-        });
+        // TODO update UsersList props
+        usersList = usersList
+          .setIn([userID, 'x'], message.data.x)
+          .setIn([userID, 'y'], message.data.y);
+
+        this.setState({ usersList });
+        // this.updateHistory({
+        //   msg: message.data.msg,
+        //   type: "partner",
+        //   sender: message.connection.peer,
+        //   time: Date.now()
+        // });
       } else if (message.data.cmd === "error") {
-        this.updateHistory({
-          msg: `${message.data.error}`,
-          type: "system",
-          sender: message.connection.peer,
-          time: Date.now()
-        });
-        this.setState({
-          alert: true,
-          alertText: message.data.error
-        });
+        console.log(message.data.error);
+        // this.updateHistory({
+        //   msg: `${message.data.error}`,
+        //   type: "system",
+        //   sender: message.connection.peer,
+        //   time: Date.now()
+        // });
+        // this.setState({
+        //   alert: true,
+        //   alertText: message.data.error
+        // });
       }
     });
     Events.on("peerJoined", async message => {
+      const { usersList } = this.state;
       console.log(`Peer Joined:`, message.connection.peer);
-      this.updateHistory({
-        msg: "Peer Connected",
-        type: "system",
-        sender: message.connection.peer,
-        time: Date.now()
-      });
-      this.setState({
-        channel: "connected",
-        peers: [...new Set([...this.state.peers, message.connection.peer])],
-        title: "Channel established"
-      });
+      // Need to add new key value pair to object
+
+      // TODO here can I randomly generate a colour and pass in as prop to userList
+      // OR I could use the number to pick a colour in the HSLA spectrum
+      usersList.set(message.connection.peer.id, {});
+      // TODO Add userId to usersList component
+      this.setState({ usersList });
+      // this.updateHistory({
+      //   msg: "Peer Connected",
+      //   type: "system",
+      //   sender: message.connection.peer,
+      //   time: Date.now()
+      // });
+      // this.setState({
+      //   channel: "connected",
+      //   peers: [...new Set([...this.state.peers, message.connection.peer])],
+      //   title: "Channel established"
+      // });
     });
     Events.on("peerLeft", message => {
+      const { usersList } = this.state;
       console.log("Peer Left:", message.connection.peer);
-      this.updateHistory({
-        msg: "Peer Disconnected",
-        type: "system",
-        sender: message.connection.peer,
-        time: Date.now()
-      });
-      this.setState({
-        channel: "share",
-        peers: this.state.peers.filter(item => item != message.connection.peer),
-        title: "Waiting for peers to connect..."
-      });
+      usersList.delete(message.connection.peer.id);
+      // Is it possible to remove a key value pair from an ibject literal without copying the object?
+
+      // TODO remove userId from usersList component
+      this.setState({ usersList });
+      // this.updateHistory({
+      //   msg: "Peer Disconnected",
+      //   type: "system",
+      //   sender: message.connection.peer,
+      //   time: Date.now()
+      // });
+      // this.setState({
+      //   channel: "share",
+      //   peers: this.state.peers.filter(item => item != message.connection.peer),
+      //   title: "Waiting for peers to connect..."
+      // });
+
       RTC.connectToPeers(this.props.id);
     });
   };
 
-  updateHistory = data => {
-    var history = this.state.history;
-    history.push(data);
-    this.setState({ history });
-  };
+  // updateHistory = data => {
+  //   var history = this.state.history;
+  //   history.push(data);
+  //   this.setState({ history });
+  // };
 
-  sendMessage = e => {
-    e.preventDefault();
-    if (!this.state.message) return;
-    this.updateHistory({
-      msg: this.state.message,
-      type: "me",
-      sender: "me",
-      time: Date.now()
-    });
-    RTC.broadcastMessage({ cmd: "message", msg: this.state.message });
-    console.log("Sending message", this.state.message);
-    this.setState({ message: "" });
-  };
+  // sendMessage = e => {
+  //   e.preventDefault();
+  //   if (!this.state.message) return;
+  //   this.updateHistory({
+  //     msg: this.state.message,
+  //     type: "me",
+  //     sender: "me",
+  //     time: Date.now()
+  //   });
+  //   RTC.broadcastMessage({ cmd: "message", msg: this.state.message });
+  //   console.log("Sending message", this.state.message);
+  //   this.setState({ message: "" });
+  // };
 
   render() {
     return (
-      <div>
+      <div onMouseMove={this._onMouseMove.bind(this)}>
         <Head>
           <title>Togetherness</title>
           <link href="//db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular" rel="stylesheet" type="text/css"/>
         </Head>
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
-        }
-        <Board userId={this.state.userID} usersTotal={this.state.peers.length}/>
+        <Board
+          userId={this.state.userID}
+          usersTotal={this.state.peers.length}
+          usersList={this.state.usersList}
+        />
         <p className="credits">RTC functionality created by mariocao here: https://github.com/mariocao/next-webrtc</p>
         <style jsx>{`
           p {
