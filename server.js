@@ -43,7 +43,7 @@ app.prepare().then(() => {
     );
   });
 
-  console.log("Listening on port 3000!", $PORT);
+  console.log("Listening on port", process.env.PORT || 3000);
   expressApp.use(handler);
   server.listen(process.env.PORT || 3000);
 });
