@@ -208,7 +208,6 @@ export default class extends React.Component {
         />
         <p className="credits">RTC functionality created by mariocao here: https://github.com/mariocao/next-webrtc</p>
         <style jsx>{`
-          @import url("https://hello.myfonts.net/count/3a62c5");
           p {
             font-family: arial;
             font-weight: bold;
@@ -218,7 +217,6 @@ export default class extends React.Component {
             font-size: 10px;
             text-transform: none;
           }
-          @font-face {font-family: 'CountryWestern';src: url('/static/3A62C5_0_0.eot');src: url('/static/3A62C5_0_0.eot?#iefix') format('embedded-opentype'),url('/static/3A62C5_0_0.woff2') format('woff2'),url('/static/3A62C5_0_0.woff') format('woff'),url('/static/3A62C5_0_0.ttf') format('truetype');}
         `}
         </style>
       </div>

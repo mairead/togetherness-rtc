@@ -57,9 +57,15 @@ class Letter extends Component {
       <p>
         {char}
         <style jsx>{`
-          @import url(//db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular);
-          @font-face {font-family: "RosewoodW01-Regular";
-            src: url("//db.onlinewebfonts.com/t/4b76b99051d6848168d9f187b7eeb9c1.woff") format("woff"),
+          @import url("https://hello.myfonts.net/count/3a62c5");
+          @font-face {
+            font-family: 'CountryWestern';
+            src: url('/static/3A62C5_0_0.eot');
+            src: url('/static/3A62C5_0_0.eot?#iefix') format('embedded-opentype'),
+              url('/static/3A62C5_0_0.woff2') format('woff2'),
+              url('/static/3A62C5_0_0.woff') format('woff'),
+              url('/static/3A62C5_0_0.ttf') format('truetype');
+            }
           }
           p {
             color: ${fontColour};
@@ -69,7 +75,7 @@ class Letter extends Component {
             transform: translateX(${translateXPos});
             font-size: 150px;
             text-transform: uppercase;
-            font-family: "RosewoodW01-Regular"
+            font-family: "CountryWestern"
           }
         `}</style>
       </p>
