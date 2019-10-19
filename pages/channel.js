@@ -199,7 +199,6 @@ export default class extends React.Component {
       >
         <Head>
           <title>Togetherness</title>
-          <link href="http://db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular" rel="stylesheet" type="text/css"/>
         </Head>
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
         <Board
@@ -209,6 +208,7 @@ export default class extends React.Component {
         />
         <p className="credits">RTC functionality created by mariocao here: https://github.com/mariocao/next-webrtc</p>
         <style jsx>{`
+          @import url("//hello.myfonts.net/count/3a62c5");
           p {
             font-family: arial;
             font-weight: bold;
@@ -218,6 +218,7 @@ export default class extends React.Component {
             font-size: 10px;
             text-transform: none;
           }
+          @font-face {font-family: 'CountryWestern';src: url('static/3A62C5_0_0.eot');src: url('static/3A62C5_0_0.eot?#iefix') format('embedded-opentype'),url('static/3A62C5_0_0.woff2') format('woff2'),url('static/3A62C5_0_0.woff') format('woff'),url('static/3A62C5_0_0.ttf') format('truetype');}
         `}
         </style>
       </div>
