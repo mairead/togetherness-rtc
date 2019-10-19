@@ -202,7 +202,7 @@ export default class extends React.Component {
       >
         <Head>
           <title>Togetherness</title>
-          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="viewport" content="width=640, initial-scale=.5, user-scalable=no" />
         </Head>
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
         <Board
