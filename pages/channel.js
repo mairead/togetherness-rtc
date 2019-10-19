@@ -208,6 +208,7 @@ export default class extends React.Component {
         />
         <p className="credits">RTC functionality created by mariocao here: https://github.com/mariocao/next-webrtc</p>
         <style jsx>{`
+          @import url("https://hello.myfonts.net/count/3a62c5");
           p {
             font-family: arial;
             font-weight: bold;
