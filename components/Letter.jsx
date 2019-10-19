@@ -73,7 +73,7 @@ class Letter extends Component {
             bottom: 0;
             left: 0;
             transform: translateX(${translateXPos});
-            font-size: 150px;
+            font-size: 175px;
             text-transform: uppercase;
             font-family: "CountryWestern"
           }

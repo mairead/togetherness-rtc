@@ -53,13 +53,17 @@ export default class extends React.Component {
   _onTouchMove(e) {
     const { userID } = this.state;
     // console.log('is this triggered?', userID); // this is setting channel id instead of unique person
-    RTC.broadcastMessage({ cmd: "message", x: e.screenX, y: e.screenY, userID  });
-    // this.setState({ x: e.screenX, y: e.screenY });
-  }
+    const touches = e.changedTouches;
+    const x = 0;
+    const y = 0;
 
-  fixTouchMove(e) {
-    e.preventDefault;
-    return;
+    touches.forEach((touch) => {
+      x = touch.screenX;
+      y = touch.screenY;
+    });
+    // iterate through all touches before setting last touched screen Pos
+    RTC.broadcastMessage({ cmd: "message", x, y, userID  });
+    // this.setState({ x: e.screenX, y: e.screenY });
   }
 
   initChannel = async () => {
@@ -195,10 +199,10 @@ export default class extends React.Component {
       <div
         onMouseMove={this._onMouseMove.bind(this)}
         onTouchMove={this._onTouchMove.bind(this)}
-        onTouchStart={this.fixTouchMove.bind(this)}
       >
         <Head>
           <title>Togetherness</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
         </Head>
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
         <Board
