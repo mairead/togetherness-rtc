@@ -13,6 +13,7 @@ render() {
       hsla(${colour}, 100%, 50%, 0),
       hsla(${colour}, 100%, 50%, 0))`;
 
+      // Safari mobile IOS not showing circles
   const webkitBackgroundGradient =
     `-webkit-radial-gradient(
       hsla(${colour}, 100%, 50%, 80%),

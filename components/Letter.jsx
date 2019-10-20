@@ -8,8 +8,6 @@ class Letter extends Component {
     char: PropTypes.string.isRequired,
     xPos: PropTypes.number.isRequired,
     yPos: PropTypes.number.isRequired,
-    mouseXPos: PropTypes.number.isRequired,
-    mouseYPos: PropTypes.number.isRequired,
     usersList: ImmutablePropTypes.map,
   }
 
@@ -24,9 +22,7 @@ class Letter extends Component {
       const mouseXPos = usersList.getIn([userId, 'x']);
       const distanceFromCenter = this.getDistanceFromCenter(mouseXPos, boardXPos);
       const hue = (360 / 50) * distanceFromCenter;
-      // Letters only turning red on off and not cycling colours?
       if (mouseXPos >= (boardXPos) && mouseXPos <= (boardXPos+100)) {
-        // if (mouseXPosAdjusted >= (boardXPos+100) && mouseXPosAdjusted <= (boardXPos+200)) {
         fontColour = `hsl(${hue}, 100%, 50%)`;
       }
     });

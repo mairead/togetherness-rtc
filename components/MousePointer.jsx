@@ -1,7 +1,6 @@
 import React from 'react';
 
 const MousePointer = ({ xPos, yPos, colour, size }) => {
-  console.log('size in mouse pointer', size);
   const backgroundGradient =
   `radial-gradient(
     hsla(${colour}, 100%, 50%, 80%),
