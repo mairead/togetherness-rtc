@@ -43,15 +43,8 @@ class Board extends Component {
     });
   }
 
-  // _onMouseMove(e) {
-  //   const { boardOffset } = this.state;
-  //   const boardMousePosX = e.screenX - boardOffset;
-  //   console.log(boardOffset, boardMousePosX);
-  //   this.setState({ x: boardMousePosX, y: e.screenY });
-  // }
-
   render() {
-    const { userId, usersTotal, usersList } = this.props;
+    const { userId, usersList } = this.props;
     const letterArray = ['t', 'o', 'g', 'e', 't', 'h', 'e', 'r'];
     const { x, y } = this.state;
 
@@ -73,7 +66,7 @@ class Board extends Component {
             size={usersList.getIn([userId, 'size'])}
           />
         ))}
-        <p><span className="left">{userId}</span><span>{x},{y}</span><span className="right">Users:{usersTotal}</span></p>
+        <p><span className="left">{userId}</span><span>{x},{y}</span><span className="right">Users: {userIds.length}</span></p>
         <Background />
         {letterArray.map((char, index) => (
           <Letter

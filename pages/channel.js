@@ -207,7 +207,6 @@ export default class extends React.Component {
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
         <Board
           userId={this.state.userID}
-          usersTotal={this.state.peers.length}
           usersList={this.state.usersList}
         />
 

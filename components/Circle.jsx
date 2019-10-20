@@ -13,6 +13,12 @@ render() {
       hsla(${colour}, 100%, 50%, 0),
       hsla(${colour}, 100%, 50%, 0))`;
 
+  const webkitBackgroundGradient =
+    `-webkit-radial-gradient(
+      hsla(${colour}, 100%, 50%, 80%),
+      hsla(${colour}, 100%, 50%, 0),
+      hsla(${colour}, 100%, 50%, 0))`;
+
     return (
       <div key={id} className={idClassName}>
         <style jsx>{`
@@ -24,6 +30,9 @@ render() {
             top: ${top};
             left: ${left};
             background: ${backgroundGradient};
+            background: ${webkitBackgroundGradient};
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
           }
         `}</style>
       </div>
