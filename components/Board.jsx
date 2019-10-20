@@ -64,19 +64,6 @@ class Board extends Component {
     console.log(usersList.get(['OUC5b33jvN-1', 'size']));
     return (
       <div className="board">
-        <p><span className="left">{userId}</span><span>{x},{y}</span><span className="right">Users:{usersTotal}</span></p>
-        <Background />
-        {letterArray.map((char, index) => (
-          <Letter
-            key={index}
-            char={char}
-            xPos={index}
-            yPos={200}
-            usersList={usersList}
-            mouseXPos={x}
-            mouseYPos={y}
-          />
-        ))}
         {userIds.map((userId) => (
           <MousePointer
             key={userId}
@@ -86,9 +73,23 @@ class Board extends Component {
             size={usersList.getIn([userId, 'size'])}
           />
         ))}
+        <p><span className="left">{userId}</span><span>{x},{y}</span><span className="right">Users:{usersTotal}</span></p>
+        <Background />
+        {letterArray.map((char, index) => (
+          <Letter
+            key={index}
+            char={char}
+            xPos={index}
+            yPos={0}
+            usersList={usersList}
+            mouseXPos={x}
+            mouseYPos={y}
+          />
+        ))}
+
         <style jsx>{`
           .board {
-            margin: 0 auto;
+            margin: 0;
             // cursor: none;
             width: 800px;
             height: 400px;
@@ -108,6 +109,10 @@ class Board extends Component {
             width: 33%;
           }
           .right {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            font-weight: bold;
             text-align: right;
           }
           .left {

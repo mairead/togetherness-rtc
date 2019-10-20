@@ -41,11 +41,11 @@ export default class extends React.Component {
   _onMouseMove(e) {
     const { userID } = this.state;
     let { usersList } = this.state;
-    RTC.broadcastMessage({ cmd: "message", x: e.screenX, y: e.screenY, userID  });
+    RTC.broadcastMessage({ cmd: "message", x: e.pageX, y: e.pageY, userID  });
 
     usersList = usersList
-      .setIn([userID, 'x'], e.screenX)
-      .setIn([userID, 'y'], e.screenY);
+      .setIn([userID, 'x'], e.pageX)
+      .setIn([userID, 'y'], e.pageY);
 
     this.setState({ usersList });
   }
@@ -54,8 +54,8 @@ export default class extends React.Component {
     const { userID } = this.state;
     // console.log('is this triggered?', userID); // this is setting channel id instead of unique person
     const touches = e.changedTouches;
-    const x = 0;
-    const y = 0;
+    let x = 0;
+    let y = 0;
 
     touches.forEach((touch) => {
       x = touch.screenX;
@@ -196,13 +196,13 @@ export default class extends React.Component {
 
   render() {
     return (
-      <div
+      <div className="outer"
         onMouseMove={this._onMouseMove.bind(this)}
         onTouchMove={this._onTouchMove.bind(this)}
       >
         <Head>
           <title>Togetherness</title>
-          <meta name="viewport" content="width=640, initial-scale=.5, user-scalable=no" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <p>Why not invite a friend so that you can play together? {isClient ? window.location.href : null} </p>
         <Board
@@ -210,9 +210,20 @@ export default class extends React.Component {
           usersTotal={this.state.peers.length}
           usersList={this.state.usersList}
         />
+
         <p className="credits">RTC functionality created by mariocao here: https://github.com/mariocao/next-webrtc</p>
         <style jsx>{`
+          body {
+            margin: 0;
+            padding: 0;
+          }
+          .outer {
+            border: red 2px solid;
+          }
           p {
+            position: absolute;
+            left: 50%;
+            margin-left: -375px;
             font-family: arial;
             font-weight: bold;
             text-align: center;
@@ -220,6 +231,9 @@ export default class extends React.Component {
           .credits {
             font-size: 10px;
             text-transform: none;
+            position: absolute;
+            left: 50%;
+            margin-left: -375px;
           }
         `}
         </style>

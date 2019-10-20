@@ -14,8 +14,8 @@ const MousePointer = ({ xPos, yPos, colour, size }) => {
         div{
           position: absolute;
           display: block;
-          top: ${yPos}px;
-          left: ${xPos}px;
+          top: ${yPos - (size/2)}px;
+          left: ${xPos - (size/2)}px;
           width: ${size}px;
           height: ${size}px;
           border-radius: 50%;

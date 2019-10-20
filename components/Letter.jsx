@@ -70,7 +70,7 @@ class Letter extends Component {
           p {
             color: ${fontColour};
             position: absolute;
-            bottom: 0;
+            top: -120px;
             left: 0;
             transform: translateX(${translateXPos});
             font-size: 175px;
