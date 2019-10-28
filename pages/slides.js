@@ -118,9 +118,8 @@ export default class extends React.Component {
         </div>
 
         <div className="slide">
-          <p className="bullet">https://test.webrtc.org/</p>
-          <img alt="Screenshot of RTC test site" src="static/rtc1.png" className="code-img"/>
-          <img alt="Screenshot of RTC test site" src="static/rtc2.png" className="code-img"/>
+          <img alt="Screenshot of RTC test site" src="static/rtc.png" className="chart-img"/>
+          <p className="credits">https://test.webrtc.org/</p>
         </div>
 
         <div className="slide">
