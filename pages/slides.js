@@ -1,18 +1,10 @@
 import Background from '../components/Background';
+import Link from 'next/link';
 
 export default class extends React.Component {
   static async getInitialProps({ query }) {
     return query;
   }
-
-
-        // TODO research Chrome dev tools debugging
-
-        // Tidy demo code so I can show it working to some extent
-
-          // - https://test.webrtc.org/
-
-          // - Show chrome about:// rtc-internals - dev tools debugging}
 
   render() {
     return (
@@ -78,7 +70,11 @@ export default class extends React.Component {
           <Background />
           <p className="bullet">Peer JS - Browser based RTC server</p>
           <p className="bullet">WebRTC - Based on Mario Cao's NextJS Web RTC repo</p>
-          <p className="bullet"><a href="/index" target="_blank">Demo</a></p>
+          <p className="bullet">
+            <Link href="/index" >
+              <a>Demo</a>
+            </Link>
+          </p>
         </div>
 
         <div className="slide">
@@ -119,6 +115,12 @@ export default class extends React.Component {
         <div className="slide">
           <img alt="Xirsys example of peerJS ICE server request" src="static/xirsys.png" className="chart-img"/>
           <p className="credits"><a href="https://xirsys.com/peerjs/">xirsys.com/peerjs/</a></p>
+        </div>
+
+        <div className="slide">
+          <p className="bullet">https://test.webrtc.org/</p>
+          <img alt="Screenshot of RTC test site" src="static/rtc1.png" className="code-img"/>
+          <img alt="Screenshot of RTC test site" src="static/rtc2.png" className="code-img"/>
         </div>
 
         <div className="slide">
