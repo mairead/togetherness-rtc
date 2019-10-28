@@ -12,3 +12,4 @@ Next steps:
 - Create responsive layout to shrink screen to size
 - Tidy graphics. Not sure about fuzzy pointers
 - Make mousePointers pulse
+- resolve issues around implementing proxy server for Xirsys
