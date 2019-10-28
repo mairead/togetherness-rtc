@@ -22,8 +22,8 @@ class Background extends Component {
       circles = circles
         .setIn([id, 'width'], `${circleSize}px`)
         .setIn([id, 'height'], `${circleSize}px`)
-        .setIn([id, 'top'], `${getRandomisedNumber(-50, 200)}px`)
-        .setIn([id, 'left'], `${getRandomisedNumber(150, 450)}px`)
+        .setIn([id, 'top'], `${getRandomisedNumber(50, 400)-(circleSize/2)}px`)
+        .setIn([id, 'left'], `${getRandomisedNumber(50, 750)-(circleSize/2)}px`)
         .setIn([id, 'colour'], getRandomisedNumber(0, 360));
     });
 

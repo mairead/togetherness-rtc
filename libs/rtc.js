@@ -158,7 +158,7 @@ export default class RTC {
 // };
 
 const signalingServer = {
-  host: process.env.NODE_ENV === "production" ? "my.domain" : "localhost",
+  host: process.env.NODE_ENV === "production" ? "next-rtc.herokuapp.com" : "localhost",
   port: process.env.NODE_ENV === "production" ? 443 : 3000,
   path: "/peerjs"
 };

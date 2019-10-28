@@ -8,8 +8,6 @@ class Letter extends Component {
     char: PropTypes.string.isRequired,
     xPos: PropTypes.number.isRequired,
     yPos: PropTypes.number.isRequired,
-    mouseXPos: PropTypes.number.isRequired,
-    mouseYPos: PropTypes.number.isRequired,
     usersList: ImmutablePropTypes.map,
   }
 
@@ -24,9 +22,7 @@ class Letter extends Component {
       const mouseXPos = usersList.getIn([userId, 'x']);
       const distanceFromCenter = this.getDistanceFromCenter(mouseXPos, boardXPos);
       const hue = (360 / 50) * distanceFromCenter;
-      // Letters only turning red on off and not cycling colours?
       if (mouseXPos >= (boardXPos) && mouseXPos <= (boardXPos+100)) {
-        // if (mouseXPosAdjusted >= (boardXPos+100) && mouseXPosAdjusted <= (boardXPos+200)) {
         fontColour = `hsl(${hue}, 100%, 50%)`;
       }
     });
@@ -57,19 +53,25 @@ class Letter extends Component {
       <p>
         {char}
         <style jsx>{`
-          @import url(//db.onlinewebfonts.com/c/4b76b99051d6848168d9f187b7eeb9c1?family=RosewoodW01-Regular);
-          @font-face {font-family: "RosewoodW01-Regular";
-            src: url("//db.onlinewebfonts.com/t/4b76b99051d6848168d9f187b7eeb9c1.woff") format("woff"),
+          @import url("https://hello.myfonts.net/count/3a62c5");
+          @font-face {
+            font-family: 'CountryWestern';
+            src: url('/static/3A62C5_0_0.eot');
+            src: url('/static/3A62C5_0_0.eot?#iefix') format('embedded-opentype'),
+              url('/static/3A62C5_0_0.woff2') format('woff2'),
+              url('/static/3A62C5_0_0.woff') format('woff'),
+              url('/static/3A62C5_0_0.ttf') format('truetype');
+            }
           }
           p {
             color: ${fontColour};
             position: absolute;
-            bottom: 0;
+            top: -120px;
             left: 0;
             transform: translateX(${translateXPos});
-            font-size: 150px;
+            font-size: 175px;
             text-transform: uppercase;
-            font-family: "RosewoodW01-Regular"
+            font-family: "CountryWestern"
           }
         `}</style>
       </p>
