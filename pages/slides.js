@@ -104,6 +104,11 @@ export default class extends React.Component {
           <p className="bullet">NAT (Network Address Translation)</p>
         </div>
 
+        <div className="slide">
+          <img alt="Xirsys example of peerJS ICE server request" src="static/xirsys.png" className="chart-img"/>
+          <p className="credits"><a href="https://xirsys.com/peerjs/">xirsys.com/peerjs/</a></p>
+        </div>
+
         <div className="slide text-slide">
           <Background />
           <p className="bullet">Xirsys - Paid ICE service</p>
@@ -113,26 +118,8 @@ export default class extends React.Component {
         </div>
 
         <div className="slide">
-          <img alt="Xirsys example of peerJS ICE server request" src="static/xirsys.png" className="chart-img"/>
-          <p className="credits"><a href="https://xirsys.com/peerjs/">xirsys.com/peerjs/</a></p>
-        </div>
-
-        <div className="slide">
           <img alt="Screenshot of RTC test site" src="static/rtc.png" className="chart-img"/>
           <p className="credits">https://test.webrtc.org/</p>
-        </div>
-
-        <div className="slide">
-          <Background />
-          <h2>Finally?</h2>
-        </div>
-
-        <div className="slide text-slide">
-          <Background />
-          <p className="bullet">*Spoiler* - I didn't get the job because my prototype code wasn't tidy enough</p>
-          <p className="bullet">I'm looking for devs to join me at Chaos Camp</p>
-          <p className="bullet">I'm looking for artists to join me at Together</p>
-          <p className="bullet">Tweet me at @tiny_m</p>
         </div>
 
         <div className="slide text-slide">
@@ -145,8 +132,25 @@ export default class extends React.Component {
           <p className="bullet">https://webrtcglossary.com/</p>
         </div>
 
+        <div className="slide">
+          <Background />
+          <h2>Finally?</h2>
+        </div>
 
+        <div className="slide text-slide">
+          <Background />
+          <p className="bullet">*Spoiler* - I didn't get the job because my prototype code wasn't tidy enough</p>
+          <p className="bullet">I'm looking for devs to join me at Chaos Camp</p>
+          <p className="bullet">I'm looking for artists to join me at Together</p>
 
+        </div>
+
+        <div className="slide">
+          <Background />
+          <h2>Thank you!</h2>
+          <p className="sub">Tweet me at @tiny_m</p>
+          <p className="sub">Slides at https://github.com/mairead/togetherness-rtc</p>
+        </div>
 
       <style jsx>{`
         @import url("https://hello.myfonts.net/count/3a62c5");
